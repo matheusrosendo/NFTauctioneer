@@ -1,3 +1,15 @@
+#private keys files
+.secret
+.infura
+.etherscan
+
+old
+AuctionNFT.db
+
+# Hardhat files
+cache
+artifacts
+
 # Logs
 logs
 *.log
@@ -102,3 +114,27 @@ dist
 
 # TernJS port file
 .tern-port
+
+node_modules
+.env
+coverage
+coverage.json
+typechain
+typechain-types
+
+# Hardhat files
+cache
+artifacts
+
+
+node_modules
+.env
+coverage
+coverage.json
+typechain
+typechain-types
+
+# Hardhat files
+cache
+artifacts
+

@@ -62,7 +62,7 @@ task("custom-auction-open", "##### Open Auction on Auction Manager as specified 
                 }
                 //get the blockchain index of the Auction created 
                 if(event.event == "AuctionCreated"){
-                  auctionBlockchainIndex = event.args[2];
+                  auctionBlockchainIndex = parseInt(event.args[1]);
                 }     
               }
               let tx = result.hash;    

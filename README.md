@@ -1,6 +1,10 @@
 # NFT auctioneer
 An Auction Manager for ERC721 based NFTs using Solidity, NodeJs / Express API and Mysql database.
 
+![GitHub](https://img.shields.io/github/license/matheusrosendo/NFTauctioneer)
+![GitHub repo size](https://img.shields.io/github/repo-size/matheusrosendo/NFTauctioneer)
+
+
 > Disclaimer: this project is not ready to production, the idea here is to serve as study and starting point base to create a new NFT project, like a marketplace, for example. 
 
 
@@ -86,9 +90,6 @@ Verify if container is running
 If it is not running, start the container
 `docker start auctionNFT`
 
-Open another terminal window and start the backend. It will setup database deploying all tables from scratch using Sequelizer. It will also start Express server running the API with all endpoints:  
-`npm start`    
-
 ## Unit Tests
 It was developed two types of unit tests: the ones focused on testing the AuctionManager Smart Contract using Hardhat and Chai, located in the `test` folder; and the ones focused on testing the API endpoits using Jest and Supertest, located in the `server/backendTests` folder.
 
@@ -111,6 +112,9 @@ the result will be in a created folder called `coverage`. Open coverage/index.ht
 
 
 ## Happy Path Use Case
+Open another terminal window and start the backend. It will setup database deploying all tables from scratch using Sequelizer. It will also start Express server running the API with all endpoints:  
+`npm start`    
+
 Open another terminal window and execute all steps of the Happy Path Use Case (This use case simulates an entire auciton since minting NFT until setling down the auction). Details of each step is contained and comented in the bash script file happyPathUseCase.sh: 
 `sh happyPathUseCase.sh`  
 

@@ -5,12 +5,12 @@ An Auction Manager for ERC721 based NFTs using Solidity, NodeJs / Express API an
 ![GitHub repo size](https://img.shields.io/github/repo-size/matheusrosendo/NFTauctioneer)
 
 
-> Disclaimer: this project is not ready to production, the idea here is to serve as study and starting point base to create a new NFT project, like a marketplace, for example. 
+> Disclaimer: this project is not ready to production, the idea here is to serve as study and starting point base to create a new NFT project, like a marketplace for example. 
 
 
 ## Overview 
 It uses Hardhat Taks to interact with Node APIs responsible for comunicating with the Mysql database to keep track of all "user" actions. These Tasks simulate API calls that could be made by the frontend (not implemented here). That is why all communcation between Hardhat Tasks and the backend was made by http requests using the Axios library.
-In order to ease testing and make interactions without implementing a frontend, a local ganache blockchain was used and the "users" address are generated from the mnemonic informed in the .secret file. This way, whenever 0 is passed as --account parameter in a Hardhat Task, it means the first derived account from the mnemonic will sign that transaction. 
+In order to ease testing and make interactions without implementing a frontend, a local Ganache blockchain was used and the "users" address are generated from the mnemonic informed in the .secret file. This way, whenever 0 is passed as --account parameter in a Hardhat Task, it means the first derived account from mnemonic will sign that transaction. 
 
 
 ### Tech Stack
@@ -64,14 +64,14 @@ Pull the Docker Image for MySQL
 `sudo docker pull mysql/mysql-server:latest`  
 Verify if image was stored correctly  
 `sudo docker images`  
-Deploy and Start the MySQL Container  
-`docker run -p 13306:3306 --name auctionNFT -e MYSQL_ROOT_PASSWORD=root -d mysql:latest`
-Install Mysql client
-`apt-get install mysql-client`
-Log into Mysql using client shell, type 'root' as password when prompted
-`mysql --host=127.0.0.1 --port=13306 -u root -p`
-Once inside mysql shell prompt (mysql>), create new schema
-`create schema db_auctionNFT;`
+Deploy and Start the MySQL Container   
+`docker run -p 13306:3306 --name auctionNFT -e MYSQL_ROOT_PASSWORD=root -d mysql:latest`  
+Install Mysql client  
+`sudo apt-get install mysql-client`  
+Log into Mysql using client shell, type 'root' as password when prompted  
+`mysql --host=127.0.0.1 --port=13306 -u root -p`  
+Once inside mysql shell prompt (mysql>), create new schema  
+`create schema db_auctionNFT;`  
  
 ### Setup API and Ganache Blockchain
 * Clone this repository: `git clone git@github.com:matheusrosendo/NFTauctioneer.git`
@@ -81,7 +81,7 @@ Once inside mysql shell prompt (mysql>), create new schema
 * Rename .secret_RENAME to .env
 * Create a fresh new account on metamask (recomended), copy mnemonic and paste it on .secret file
 
-Start Ganache Local Blockchain replacing MNEMONIC by .secret content:  
+Open a new terminal and start Ganache Local Blockchain replacing MNEMONIC by .secret content:  
 `ganache-cli -m 'MNEMONIC'`
 
 Verify if container is running
@@ -101,8 +101,8 @@ To execute Jest coverage tests:
 
 ### Hardhat Unit Tests / Coverage (Smart Contract tests)
 To execute hardhat unit tests:   
-`npx hardhat test --network hardhat`
-To execute hardhat unit tests with solidity-coverage: 
+`npx hardhat test --network hardhat`  
+To execute hardhat unit tests with solidity-coverage:  
 `npx hardhat coverage --network hardhat`  
 the result will be in a created folder called `coverage`. Open coverage/index.html to see the results, something like:
 

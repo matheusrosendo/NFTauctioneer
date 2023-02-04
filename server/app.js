@@ -35,7 +35,7 @@ let promiseApp = new Promise(async (resolve, reject)=>{
 
     // simple route
     app.get("/", (req, res) => {
-      res.json({ message: "Welcome to Sticky Auction application." });
+      res.json({ message: "Welcome to the NFT Auction API." });
     });
 
     // define routes

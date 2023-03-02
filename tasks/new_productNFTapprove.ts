@@ -1,13 +1,18 @@
 const Util = require('commonutils');
-const axios = require("axios");
-require("dotenv").config({path: ".env"});
+import { task} from "hardhat/config";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
+import "@nomiclabs/hardhat-ethers"
+import axios from "axios";
+import * as dotenv from "dotenv";
+dotenv.config();
+
 
 module.exports = 
 task("custom-approve", "##### Approve AuctionManager contract to transfer a specific token of the informed NFTcollection #####")
 .addParam("account", "The user account's sequence ID")
 .addParam("manager", "Auction Manager ID")
 .addParam("minted", "MintedNFT Id")
-.setAction(async (taskArgs, hre) => {
+.setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {
  
 
   //get user data by the address informed
@@ -64,7 +69,7 @@ task("custom-approve", "##### Approve AuctionManager contract to transfer a spec
               console.log(`Error: mintedNFT not found for API = ${mintedNFTApiUrl} !`)
             }
         
-          }), (error)=>{
+          }), (error: any)=>{
             console.log(`Error ${error} quering ${mintedNFTApiUrl}`)
           } 
 
@@ -72,7 +77,7 @@ task("custom-approve", "##### Approve AuctionManager contract to transfer a spec
           console.log(`Error: auctionManager not found for API = ${auctionManagerApiUrl} !`)
         }
     
-      }), (error)=>{
+      }), (error: any)=>{
         console.log(`Error ${error} quering ${auctionManagerApiUrl}`)
       } 
       
@@ -80,7 +85,7 @@ task("custom-approve", "##### Approve AuctionManager contract to transfer a spec
       console.log(`Error: user not found for API = ${userApiUrl}, try run task custom-init-users first!`)
     }
 
-  }), (error)=>{
+  }), (error: any)=>{
     console.log(`Error ${error}`)
   }
 

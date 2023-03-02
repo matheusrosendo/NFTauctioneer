@@ -1,6 +1,10 @@
 const Util = require('commonutils');
-const axios = require("axios");
-require("dotenv").config({path: ".env"});
+import { task} from "hardhat/config";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
+import "@nomiclabs/hardhat-ethers"
+import axios from "axios";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 module.exports = 
 task("custom-auction-open", "##### Open Auction on Auction Manager as specified account #####")
@@ -9,7 +13,7 @@ task("custom-auction-open", "##### Open Auction on Auction Manager as specified 
 .addParam("minted", "MintedNFT Id")
 .addParam("floor", "Floor price in ETH")
 
-.setAction(async (taskArgs, hre) => {
+.setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {
 
   //get user data by the address informed
   let userApiUrl = `${process.env.API_URL}/user/${taskArgs.account}`
@@ -50,7 +54,7 @@ task("custom-auction-open", "##### Open Auction on Auction Manager as specified 
               
               //open Auction on Auction Manager smart contract
               const auctionManagerInstance = await hre.ethers.getContractAt("AuctionManager", auctionManagerAddress);
-              let weiAmount = ethers.utils.parseUnits(taskArgs.floor,"ether");
+              let weiAmount = hre.ethers.utils.parseUnits(taskArgs.floor,"ether");
               let result = await auctionManagerInstance.connect(accounts[taskArgs.account]).openAuction(NFTcollectionAddress, blockchainTokenId, weiAmount);
               
               //show events and transaction hash
@@ -81,14 +85,14 @@ task("custom-auction-open", "##### Open Auction on Auction Manager as specified 
               }).then((response)=>{
                 console.log(`##### database: Auction registered in the database #####` );
                 console.log(response.data);
-              }), (error)=>{
+              }), (error: any)=>{
                 console.log(`Error ${error}`)
               }
 
             } else {
               console.log(`Error quering ${AuctionManagerApiUrl} invalid data ${JSON.stringify(response.data)}`)
             }        
-          }), (error)=>{
+          }), (error: any)=>{
             console.log(`Error ${error} quering ${AuctionManagerApiUrl}`)
           }  
 
@@ -96,7 +100,7 @@ task("custom-auction-open", "##### Open Auction on Auction Manager as specified 
           console.log(`Error quering ${mintedNFTApiUrl} invalid data ${JSON.stringify(response.data)}`)
         }
     
-      }), (error)=>{
+      }), (error: any)=>{
         console.log(`Error ${error} quering ${mintedNFTApiUrl}`)
       } 
 
@@ -104,7 +108,7 @@ task("custom-auction-open", "##### Open Auction on Auction Manager as specified 
       console.log(`Error: user not found for API = ${userApiUrl}, try run task custom-init-users first!`)
     }
 
-  }), (error)=>{
+  }), (error: any)=>{
     console.log(`Error ${error}`)
   }
   

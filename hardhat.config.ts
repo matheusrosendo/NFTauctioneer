@@ -2,18 +2,18 @@ require("@nomicfoundation/hardhat-toolbox");
 require('solidity-coverage');
 
 //import custom taks
-require("./tasks/new_createUser.js");
-require("./tasks/new_createInitialUsers.js");
-require("./tasks/new_deployAuctionManager.js");
-require("./tasks/new_getUser.js");
-require("./tasks/new_deployNFTcollection.js");
-require("./tasks/new_mintToken.js");
-require("./tasks/new_productNFTapprove.js");
-require("./tasks/new_openAuction.js");
-require("./tasks/new_bidAuction.js");
-require("./tasks/new_balances.js");
-require("./tasks/new_infoMintedNFT.js");
-require("./tasks/new_settleAuction.js");
+require("./tasks/new_createUser.ts");
+require("./tasks/new_createInitialUsers.ts");
+require("./tasks/new_deployAuctionManager.ts");
+require("./tasks/new_getUser.ts");
+require("./tasks/new_deployNFTcollection.ts");
+require("./tasks/new_mintToken.ts");
+require("./tasks/new_productNFTapprove.ts");
+require("./tasks/new_openAuction.ts");
+require("./tasks/new_bidAuction.ts");
+require("./tasks/new_balances.ts");
+require("./tasks/new_infoMintedNFT.ts");
+require("./tasks/new_settleAuction.ts");
 
 
 

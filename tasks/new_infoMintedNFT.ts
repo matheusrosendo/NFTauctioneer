@@ -1,12 +1,16 @@
 const Util = require('commonutils');
-const axios = require("axios");
-require("dotenv").config({path: ".env"});
+import { task} from "hardhat/config";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
+import "@nomiclabs/hardhat-ethers"
+import axios from "axios";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 module.exports = 
 task("custom-minted-info", "##### Uri info of an token on NFTcollection #####")
 .addParam("minted", "Minted Token database Id")
 
-.setAction(async (taskArgs, hre) => {
+.setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {
 
   //get MintedNFT data
   let mintedNFTApiUrl = `${process.env.API_URL}/mintedNFT/${taskArgs.minted}`
@@ -33,7 +37,7 @@ task("custom-minted-info", "##### Uri info of an token on NFTcollection #####")
       console.log(`Error: mintedNFT not found for API = ${mintedNFTApiUrl} !`)
     }
 
-  }), (error)=>{
+  }), (error: any)=>{
     console.log(`Error ${error} quering ${mintedNFTApiUrl}`)
   } 
 

@@ -34,10 +34,10 @@ describe("NFTcollection general unit test", function () {
     const auctionManagerfactory = await ethers.getContractFactory("AuctionManager");
     const accounts = await ethers.getSigners();
     
-    let auctionDuration = parseInt(process.env.AUCTION_DURATION_IN_DAYS);
-    let maxBids = parseInt(process.env.MAX_BIDS_PER_AUCTION);
-    let bidIncreasePercent = parseInt(process.env.BID_MIN_INCREASING_PERCENTAGE);
-    let ownerCommission = parseInt(process.env.CONTRACT_OWNER_PERCENTAGE_COMMISSION_BPS);
+    let auctionDuration = parseInt(process.env.AUCTION_DURATION_IN_DAYS ?? '0');
+    let maxBids = parseInt(process.env.MAX_BIDS_PER_AUCTION ?? '0');
+    let bidIncreasePercent = parseInt(process.env.BID_MIN_INCREASING_PERCENTAGE ?? '0');
+    let ownerCommission = parseInt(process.env.CONTRACT_OWNER_PERCENTAGE_COMMISSION_BPS ?? '0');
     const auctionManagerInstance = await auctionManagerfactory.deploy(auctionDuration, maxBids, bidIncreasePercent, ownerCommission);
 
     await auctionManagerInstance.deployed();
@@ -63,7 +63,7 @@ describe("NFTcollection general unit test", function () {
     await NFTcollectioninstance.connect(accounts[1]).safeMint(accounts[1].address, "product0");
     expect(await NFTcollectioninstance.ownerOf(0)).to.equal(accounts[1].address);
     await NFTcollectioninstance.burn(0);
-    await expect(NFTcollectioninstance.ownerOf(0)).to.be.revertedWith("ERC721: invalid token ID");
+    await expect(NFTcollectioninstance.ownerOf(0)).to.be.rejectedWith("ERC721: invalid token ID");
 
   });
 
@@ -73,7 +73,7 @@ describe("NFTcollection general unit test", function () {
     await NFTcollectioninstance.connect(accounts[4]).safeMint(accounts[5].address, "product 0");
     
     await expect(NFTcollectioninstance.approve(auctionManagerInstance.address, 0))
-      .to.be.revertedWith("ERC721: approve caller is not token owner or approved for all");
+      .to.be.rejectedWith("ERC721: approve caller is not token owner or approved for all");
   }); 
 
   it("be able to mint an NFT as account 4 to account 5, and as account 5 set approval of the minted token to AuctionManager contract", async function () {

@@ -12,10 +12,10 @@ describe("Auction Use Case -> Happy Path Unit Test \n  Actors: \n    Contract Ow
     const auctionManagerfactory = await ethers.getContractFactory("AuctionManager");
     const accounts = await ethers.getSigners();
     
-    let auctionDuration = parseInt(process.env.AUCTION_DURATION_IN_DAYS);
-    let maxBids = parseInt(process.env.MAX_BIDS_PER_AUCTION);
-    let bidIncreasePercent = parseInt(process.env.BID_MIN_INCREASING_PERCENTAGE);
-    let ownerCommission = parseInt(process.env.CONTRACT_OWNER_PERCENTAGE_COMMISSION_BPS);
+    let auctionDuration = parseInt(process.env.AUCTION_DURATION_IN_DAYS ?? '0');
+    let maxBids = parseInt(process.env.MAX_BIDS_PER_AUCTION ?? '0');
+    let bidIncreasePercent = parseInt(process.env.BID_MIN_INCREASING_PERCENTAGE ?? '0');
+    let ownerCommission = parseInt(process.env.CONTRACT_OWNER_PERCENTAGE_COMMISSION_BPS ?? '0');
     const auctionManagerInstance = await auctionManagerfactory.deploy(auctionDuration, maxBids, bidIncreasePercent, ownerCommission);
     await auctionManagerInstance.deployed();
     return { auctionManagerInstance, accounts};

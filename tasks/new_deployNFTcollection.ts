@@ -1,10 +1,14 @@
-const axios = require("axios");
-require("dotenv").config({path: ".env"});
+import { task} from "hardhat/config";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
+import "@nomiclabs/hardhat-ethers"
+import axios from "axios";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 module.exports = 
 task("custom-collection-deploy", "##### Deploys a NFTcollection contract as specified account #####")
 .addParam("account", "The account's sequence ID")
-.setAction(async (taskArgs, hre) => {
+.setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {
 
   //get user data by the address informed
   let userApiUrl = `${process.env.API_URL}/user/${taskArgs.account}`
@@ -39,14 +43,14 @@ task("custom-collection-deploy", "##### Deploys a NFTcollection contract as spec
       }).then((response)=>{
         console.log(`##### database: NFTcollection registered in the database #####` );
         console.log(response.data);
-      }), (error)=>{
+      }), (error: any)=>{
         console.log(`Error ${error}`)
       }
     } else {
       console.log(`Error: user not found for API = ${userApiUrl}, try run task custom-init-users first!`)
     }
 
-  }), (error)=>{
+  }), (error: any)=>{
     console.log(`Error ${error}`)
   } 
   

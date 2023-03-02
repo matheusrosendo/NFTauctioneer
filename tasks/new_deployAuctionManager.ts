@@ -1,12 +1,15 @@
 const Files = require("jsonfilemanager");
 const Util = require('commonutils');
-const axios = require("axios");
-
-require("dotenv").config({path: ".env"});
+import { task} from "hardhat/config";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
+import "@nomiclabs/hardhat-ethers"
+import axios from "axios";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 module.exports = 
 task("custom-init-deploy", "##### Deploy AuctionManager and save tx and address in the database #####")
-.setAction(async (taskArgs, hre) => {
+.setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {
   
   //get user id of the owner of the contract
   const accounts = await hre.ethers.getSigners();
@@ -22,10 +25,10 @@ task("custom-init-deploy", "##### Deploy AuctionManager and save tx and address 
 
       //deploy smart contract
       const AuctionManager = await hre.ethers.getContractFactory("AuctionManager");
-      let auctionDuration = parseInt(process.env.AUCTION_DURATION_IN_DAYS);
-      let maxBids = parseInt(process.env.MAX_BIDS_PER_AUCTION);
-      let bidIncreasePercent = parseInt(process.env.BID_MIN_INCREASING_PERCENTAGE);
-      let ownerCommission = parseInt(process.env.CONTRACT_OWNER_PERCENTAGE_COMMISSION_BPS);
+      let auctionDuration = parseInt(process.env.AUCTION_DURATION_IN_DAYS ?? '0');
+      let maxBids = parseInt(process.env.MAX_BIDS_PER_AUCTION ?? '0');
+      let bidIncreasePercent = parseInt(process.env.BID_MIN_INCREASING_PERCENTAGE ?? '0');
+      let ownerCommission = parseInt(process.env.CONTRACT_OWNER_PERCENTAGE_COMMISSION_BPS ?? '0');
       const auctionManagerInstance = await AuctionManager.connect(accounts[0]).deploy(auctionDuration, maxBids, bidIncreasePercent, ownerCommission);
       await auctionManagerInstance.deployed();
       console.log(`Deployed contract at ${auctionManagerInstance.address}`);
@@ -43,14 +46,14 @@ task("custom-init-deploy", "##### Deploy AuctionManager and save tx and address 
       }).then((responseAuction)=>{
         console.log(`##### database: AuctionManager registered in the database #####` );
         console.log(responseAuction.data);
-      }), (error)=>{
+      }), (error: any)=>{
         console.log(`Error ${error}`)
       }
     } else {
       console.log(`Error: user not found, try run task custom-init-users first!`)
     }
 
-  }), (error)=>{
+  }), (error: any)=>{
     console.log(`Error ${error}`)
   } 
 

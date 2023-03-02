@@ -74,7 +74,7 @@ Once inside mysql shell prompt (mysql>), create new schema
  
 ### Setup API and Ganache Blockchain
 * Clone this repository setting typescript branch: `git clone git@github.com:matheusrosendo/NFTauctioneer.git -b typescript`
-* Enter NFTauctioneer folder and install dependencies: `npm install`
+* Enter NFTauctioneer folder and install dependencies: `npm install --legacy-peer-deps`
 * In the project main folder type `code .` to open Visual Studo Code
 * Rename .env_RENAME to .env
 * Rename .secret_RENAME to .env

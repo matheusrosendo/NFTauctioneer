@@ -1,5 +1,5 @@
 # NFT auctioneer
-An Auction Manager for ERC721 based NFTs using Solidity, NodeJs / Express API and Mysql database.
+An Auction Manager for ERC721 NFTs using Typescript, Solidity, NodeJs / Express API and Mysql database.
 
 ![GitHub](https://img.shields.io/github/license/matheusrosendo/NFTauctioneer)
 ![GitHub repo size](https://img.shields.io/github/repo-size/matheusrosendo/NFTauctioneer)

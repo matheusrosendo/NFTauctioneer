@@ -1,11 +1,11 @@
 const Util = require('commonutils');
-const logger = require('../logger');
-const db = require("../models");
+import logger from '../logger';
+import db from "../models";
 const Bid = db.bid;
-const Op = db.Sequelize.Op;
+import express from "express";
 
 // Create and Save a new Bid
-exports.create = (req, res) => {
+exports.create = (req:express.Request, res:express.Response) => {
     // Validate request
     if (!Util.verifyValidInputs([req.body.auctionId, req.body.tx, req.body.userId, req.body.blockchainIndex])) {
       res.status(400).send({
@@ -16,11 +16,11 @@ exports.create = (req, res) => {
   
     // Save Bid in the database
     Bid.create(req.body)
-      .then(data => {
+      .then((data: any) => {
         logger.info(data)
         res.send(data);        
       })
-      .catch(err => {
+      .catch((err: Error) => {
         logger.warn(err.message);
         res.status(500).send({
           message:
@@ -30,13 +30,13 @@ exports.create = (req, res) => {
   };
 
 // Retrieve all Bids from the database.
-exports.findAll = (req, res) => {
+exports.findAll = (req:express.Request, res:express.Response) => {
     
     Bid.findAll()
-      .then(data => {
+      .then((data: any) => {
         res.send(data);
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving users."
@@ -45,10 +45,10 @@ exports.findAll = (req, res) => {
   };
 
 // Find a single Bid with an id
-exports.findOne = (req, res) => {
+exports.findOne = (req:express.Request, res:express.Response) => {
     const id = req.params.id;
     Bid.findByPk(id, {include: [{model: db.auction, include: [{model: db.auctionManager}]}, {model: db.user }]})
-      .then(data => {
+      .then((data: any) => {
         if (data) {
           res.send(data);
         } else {
@@ -57,7 +57,7 @@ exports.findOne = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Error retrieving Bid with id=" + id
         });
@@ -65,7 +65,7 @@ exports.findOne = (req, res) => {
   };
 
 // Update a Bid by the id in the request
-exports.update = (req, res) => {
+exports.update = (req:express.Request, res:express.Response) => {
     // Validate id  
     const id = req.params.id;
     if(!id){
@@ -87,7 +87,7 @@ exports.update = (req, res) => {
     Bid.update(req.body, {
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "Bid was updated successfully."
@@ -98,7 +98,7 @@ exports.update = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Error updating Bid with id=" + id
         });
@@ -106,7 +106,7 @@ exports.update = (req, res) => {
   };
 
 // Delete a Bid with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = (req:express.Request, res:express.Response) => {
     // Validate id  
     const id = req.params.id;
     if(!id){
@@ -120,7 +120,7 @@ exports.delete = (req, res) => {
     Bid.destroy({
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "Bid was deleted successfully!"
@@ -131,7 +131,7 @@ exports.delete = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Could not delete Bid with id=" + id
         });

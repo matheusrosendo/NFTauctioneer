@@ -1,11 +1,13 @@
 const Util = require('commonutils');
-const logger = require('../logger');
-const db = require("../models");
+import logger from '../logger';
+import db from "../models";
 const User = db.user;
-const Op = db.Sequelize.Op;
+import Sequelize from 'sequelize';
+const Op = Sequelize.Op;
+import express from "express";
 
 // Create and Save a new User
-exports.create = (req, res) => {
+exports.create = (req:express.Request, res:express.Response) => {
     // Validate request
     if (!Util.verifyValidInputs([req.body.address, req.body.id])) {
       res.status(400).send({
@@ -14,17 +16,17 @@ exports.create = (req, res) => {
       return;
     }
     User.findByPk(req.body.id)
-    .then(data => {
+    .then((data:any) => {
       if (data) {
         res.send({message: "User already registered in database", data: data});
       } else {
         // Save User in the database
         User.create(req.body)
-        .then(data => {
+        .then((data:any) => {
           logger.info(data)
           res.send(data);        
         })
-        .catch(err => {
+        .catch((err: Error) => {
           logger.warn(err.message);
           res.status(500).send({
             message:
@@ -33,9 +35,9 @@ exports.create = (req, res) => {
         });
       }
     })
-    .catch(err => {
+    .catch((err: Error) => {
       res.status(500).send({
-        message: "Error retrieving User with id=" + id
+        message: "Error retrieving User with id=" + req.body.id
       });
     });
 
@@ -44,7 +46,7 @@ exports.create = (req, res) => {
 
 
 // Retrieve all Users from the database.
-exports.findAll = (req, res) => {
+exports.findAll = (req:express.Request, res:express.Response) => {
   // if keyword was passed it mounts the condition (returns records where keyword found in address or description)
   const keyword = req.query.keyword;
   var condition = keyword ? {
@@ -56,10 +58,10 @@ exports.findAll = (req, res) => {
 
   //make query
   User.findAll({ where: condition })
-    .then(data => {
+    .then((data: any) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err:any) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving users."
@@ -69,10 +71,10 @@ exports.findAll = (req, res) => {
 
 
 // Find a single User with an id
-exports.findOne = (req, res) => {
+exports.findOne = (req:express.Request, res:express.Response) => {
     const id = req.params.id;
     User.findByPk(id)
-      .then(data => {
+      .then((data: any) => {
         if (data) {
           res.send(data);
         } else {
@@ -81,7 +83,7 @@ exports.findOne = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err:any) => {
         res.status(500).send({
           message: "Error retrieving User with id=" + id
         });
@@ -89,13 +91,13 @@ exports.findOne = (req, res) => {
   };
 
 // Update a User by the id in the request
-exports.update = (req, res) => {
+exports.update = (req:express.Request, res:express.Response) => {
     const id = req.params.id;
   
     User.update(req.body, {
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "User was updated successfully."
@@ -106,7 +108,7 @@ exports.update = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err:any) => {
         res.status(500).send({
           message: "Error updating User with id=" + id
         });
@@ -114,13 +116,13 @@ exports.update = (req, res) => {
   };
 
 // Delete a User with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = (req:express.Request, res:express.Response) => {
     const id = req.params.id;
   
     User.destroy({
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "User was deleted successfully!"
@@ -131,7 +133,7 @@ exports.delete = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err:any) => {
         res.status(500).send({
           message: "Could not delete User with id=" + id
         });
@@ -140,15 +142,15 @@ exports.delete = (req, res) => {
 
 
 // Delete all Users from the database.
-exports.deleteAll = (req, res) => {
+exports.deleteAll = (req:express.Request, res:express.Response) => {
   User.destroy({
     where: {},
     truncate: false
   })
-    .then(nums => {
-      res.send({ message: `${nums} Users were deleted successfully!` });
+    .then((num: number) => {
+      res.send({ message: `${num} Users were deleted successfully!` });
     })
-    .catch(err => {
+    .catch((err:any) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while removing all users."
@@ -157,12 +159,12 @@ exports.deleteAll = (req, res) => {
 };
 
 // Find all published Users
-exports.findAllPublished = (req, res) => {
+exports.findAllPublished = (req:express.Request, res:express.Response) => {
     User.findAll({ where: { published: true } })
-      .then(data => {
+      .then((data: any) => {
         res.send(data);
       })
-      .catch(err => {
+      .catch((err:any) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving users."

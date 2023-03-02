@@ -1,5 +1,5 @@
-module.exports = (app) => {
-    const mintedNFTs = require("../controllers/mintedNFT.controller.js");
+export default (app: any) => {
+    const mintedNFTs = require("../controllers/mintedNFT.controller");
   
     var router = require("express").Router();
   

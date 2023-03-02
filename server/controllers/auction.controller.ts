@@ -1,11 +1,11 @@
 const Util = require('commonutils');
-const logger = require('../logger');
-const db = require("../models");
+import logger from '../logger';
+import db from "../models";
 const Auction = db.auction;
-const Op = db.Sequelize.Op;
+import express from "express";
 
 // Create and Save a new Auction
-exports.create = (req, res) => {
+exports.create = (req:express.Request, res:express.Response) => {
     // Validate request
     if (!Util.verifyValidInputs([req.body.auctionManagerId, req.body.tx, req.body.mintedNFTId])) {
       res.status(400).send({
@@ -16,11 +16,11 @@ exports.create = (req, res) => {
   
     // Save Auction in the database
     Auction.create(req.body)
-      .then(data => {
+      .then((data: any) => {
         logger.info(data)
         res.send(data);        
       })
-      .catch(err => {
+      .catch((err: Error) => {
         logger.warn(err.message);
         res.status(500).send({
           message:
@@ -30,13 +30,13 @@ exports.create = (req, res) => {
   };
 
 // Retrieve all Auctions from the database.
-exports.findAll = (req, res) => {
+exports.findAll = (req:express.Request, res:express.Response) => {
     
     Auction.findAll({include: [{model: db.auctionManager}, {model: db.mintedNFT }]})
-      .then(data => {
+      .then((data: any) => {
         res.send(data);
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving users."
@@ -45,10 +45,10 @@ exports.findAll = (req, res) => {
   };
 
 // Find a single Auction with an id
-exports.findOne = (req, res) => {
+exports.findOne = (req:express.Request, res:express.Response) => {
     const id = req.params.id;
     Auction.findByPk(id, {include: [{model: db.auctionManager, include: [{model: db.user}]}, {model: db.mintedNFT, include:[{model: db.NFTcollection}] }]})
-      .then(data => {
+      .then((data: any) => {
         if (data) {
           res.send(data);
         } else {
@@ -57,7 +57,7 @@ exports.findOne = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Error retrieving Auction with id=" + id
         });
@@ -65,7 +65,7 @@ exports.findOne = (req, res) => {
   };
 
 // Update a Auction by the id in the request
-exports.update = (req, res) => {
+exports.update = (req:express.Request, res:express.Response) => {
     // Validate id  
     const id = req.params.id;
     if(!id){
@@ -87,7 +87,7 @@ exports.update = (req, res) => {
     Auction.update(req.body, {
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "Auction was updated successfully."
@@ -98,7 +98,7 @@ exports.update = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Error updating Auction with id=" + id
         });
@@ -106,7 +106,7 @@ exports.update = (req, res) => {
   };
 
 // Delete a Auction with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = (req:express.Request, res:express.Response) => {
     // Validate id  
     const id = req.params.id;
     if(!id){
@@ -120,7 +120,7 @@ exports.delete = (req, res) => {
     Auction.destroy({
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "Auction was deleted successfully!"
@@ -131,7 +131,7 @@ exports.delete = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Could not delete Auction with id=" + id
         });

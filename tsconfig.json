@@ -7,8 +7,9 @@
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "skipLibCheck": true,
-        "outDir": "./built"
+        "outDir": "./dist",
+        "rootDir": "./", 
     }, 
-    "exclude": ["./built/**/*"]
+    "exclude": ["./tasks", "./test", "./dist/**/*"]
 }
   

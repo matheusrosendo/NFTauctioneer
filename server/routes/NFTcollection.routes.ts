@@ -1,5 +1,5 @@
-module.exports = (app) => {
-    const NFTcollections = require("../controllers/NFTcollection.controller.js");
+export default (app: any) => {
+    const NFTcollections = require("../controllers/NFTcollection.controller");
   
     var router = require("express").Router();
   

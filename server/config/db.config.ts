@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-module.exports = {  
+export default {  
   HOST: process.env.DB_HOST,
     PORT: process.env.DB_PORT,
     USER: process.env.DB_ROOT_USER,

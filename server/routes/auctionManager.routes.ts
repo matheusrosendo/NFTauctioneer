@@ -1,5 +1,5 @@
-module.exports = (app) => {
-    const auctionManager = require("../controllers/auctionManager.controller.js");
+export default (app: any) => {
+    const auctionManager = require("../controllers/auctionManager.controller");
   
     var router = require("express").Router();
   

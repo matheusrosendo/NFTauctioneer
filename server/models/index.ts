@@ -1,4 +1,6 @@
-const dbConfig = require("../config/db.config.js");
+import { string } from "hardhat/internal/core/params/argumentTypes";
+
+import dbConfig from "../config/db.config";
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -13,19 +15,19 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     idle: dbConfig.pool.idle
   }
 });
+ 
+const db = {
+  Sequelize: Sequelize, 
+  sequelize: sequelize,
+  user: require("./user.model")(sequelize, Sequelize),
+  auctionManager: require("./auctionManager.model")(sequelize, Sequelize),
+  auction: require("./auction.model")(sequelize, Sequelize),
+  mintedNFT: require("./mintedNFT.model")(sequelize, Sequelize),
+  NFTcollection: require("./NFTcollection.model")(sequelize, Sequelize),
+  bid: require("./bid.model")(sequelize, Sequelize),
+};
 
-const db = {};
-
-db.Sequelize = Sequelize; //library
-db.sequelize = sequelize; //Object
-
-//set models and cardinality
-db.user = require("./user.model.js")(sequelize, Sequelize);
-db.auctionManager = require("./auctionManager.model.js")(sequelize, Sequelize);
-db.auction = require("./auction.model.js")(sequelize, Sequelize);
-db.mintedNFT = require("./mintedNFT.model.js")(sequelize, Sequelize);
-db.NFTcollection = require("./NFTcollection.model.js")(sequelize, Sequelize);
-db.bid = require("./bid.model.js")(sequelize, Sequelize);
+//set cardinality
 db.user.hasMany(db.NFTcollection);
 db.NFTcollection.belongsTo(db.user);
 db.user.hasMany(db.bid);
@@ -43,5 +45,4 @@ db.auctionManager.belongsTo(db.user);
 
 
 
-
-module.exports = db;
+export default db;

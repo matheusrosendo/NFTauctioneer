@@ -1,6 +1,8 @@
 const Util = require('commonutils');
-const axios = require("axios");
-require("dotenv").config({path: ".env"});
+import { task} from "hardhat/config";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
+import "@nomiclabs/hardhat-ethers"
+import axios from "axios";
 
 module.exports = 
 
@@ -9,7 +11,7 @@ task("custom-auction-bid", "##### Bid Auction on Auction Manager as specified ac
 .addParam("auction", "Auction ID")
 .addParam("offer", "Bid offer")
 
-.setAction(async (taskArgs, hre) => {
+.setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {
 
   //get user data by the address informed
   let userApiUrl = `${process.env.API_URL}/user/${taskArgs.account}`
@@ -28,7 +30,7 @@ task("custom-auction-bid", "##### Bid Auction on Auction Manager as specified ac
       await axios({
         method: 'get', 
         url: auctionApiUrl
-      }).then(async (response)=>{
+      }).then(async (response: any)=>{
         const auctionId = response.data.id;
         const auctionBlockchainIndex = response.data.blockchainIndex;
         const NFTcollectionAddress = response.data.mintedNFT.NFTcollection.address;
@@ -43,7 +45,7 @@ task("custom-auction-bid", "##### Bid Auction on Auction Manager as specified ac
           if(!isAuctionReadyToSettle[0]){
 
             //bid auction  
-            let weiAmount = ethers.utils.parseUnits(taskArgs.offer,"ether");
+            let weiAmount = hre.ethers.utils.parseUnits(taskArgs.offer,"ether");
             let result = await auctionManagerInstance.connect(accounts[taskArgs.account]).bidAuction(auctionBlockchainIndex, {value: weiAmount});
             
             //show events and transaction hash
@@ -72,10 +74,10 @@ task("custom-auction-bid", "##### Bid Auction on Auction Manager as specified ac
                 "auctionId": taskArgs.auction,
                 "blockchainIndex": bidBlockchainIndex
               }
-            }).then((response)=>{
+            }).then((response: any)=>{
               console.log(`##### database: Bid registered in the database #####` );
               console.log(response.data);
-            }), (error)=>{
+            }), (error: Error)=>{
               console.log(`Error ${error}`)
             }
           } else {
@@ -86,7 +88,7 @@ task("custom-auction-bid", "##### Bid Auction on Auction Manager as specified ac
           console.log(`Error quering ${auctionApiUrl} invalid data ${JSON.stringify(response.data)}`)
         }
     
-      }), (error)=>{
+      }), (error: Error)=>{
         console.log(`Error ${error} quering ${auctionApiUrl}`)
       } 
 
@@ -94,7 +96,7 @@ task("custom-auction-bid", "##### Bid Auction on Auction Manager as specified ac
       console.log(`Error: user not found for API = ${userApiUrl}, try run task custom-init-users first!`)
     }
 
-  }), (error)=>{
+  }), (error: Error)=>{
     console.log(`Error ${error}`)
   }
   

@@ -1,11 +1,14 @@
 const Util = require('commonutils');
-const logger = require('../logger');
-const db = require("../models");
+import logger from '../logger';
+import db from "../models";
 const NFTcollection = db.NFTcollection;
-const Op = db.Sequelize.Op;
+import Sequelize from 'sequelize';
+const Op = Sequelize.Op;
+import express from "express";
+
 
 // Create and Save a new NFTcollection
-exports.create = (req, res) => {
+exports.create = (req:express.Request, res:express.Response) => {
     // Validate request
     if (!Util.verifyValidInputs([req.body.address, req.body.userId,req.body.tx  ])) {
       res.status(400).send({
@@ -23,11 +26,11 @@ exports.create = (req, res) => {
   
     // Save NFTcollection in the database
     NFTcollection.create(newRecord)
-      .then(data => {
+      .then((data: any) => {
         logger.info(data)
         res.send(data);        
       })
-      .catch(err => {
+      .catch((err: Error) => {
         logger.warn(err.message);
         res.status(500).send({
           message:
@@ -37,13 +40,13 @@ exports.create = (req, res) => {
   };
 
 // Retrieve all NFTcollections from the database.
-exports.findAll = (req, res) => {
+exports.findAll = (req:express.Request, res:express.Response) => {
     
     NFTcollection.findAll()
-      .then(data => {
+      .then((data: any) => {
         res.send(data);
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving users."
@@ -52,10 +55,10 @@ exports.findAll = (req, res) => {
   }; 
 
 // Find a single NFTcollection with an id
-exports.findOne = (req, res) => {
+exports.findOne = (req:express.Request, res:express.Response) => {
     const id = req.params.id;
     NFTcollection.findByPk(id , {include: [{model: db.user}]} )
-      .then(data => {
+      .then((data: any) => {
         if (data) {
           res.send(data);
         } else {
@@ -64,7 +67,7 @@ exports.findOne = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Error retrieving NFTcollection with id=" + id
         });
@@ -72,7 +75,7 @@ exports.findOne = (req, res) => {
   };
 
 // Update a NFTcollection by the id in the request
-exports.update = (req, res) => {
+exports.update = (req:express.Request, res:express.Response) => {
     // Validate id  
     const id = req.params.id;
     if(!id){
@@ -94,7 +97,7 @@ exports.update = (req, res) => {
     NFTcollection.update(req.body, {
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "NFTcollection was updated successfully."
@@ -105,7 +108,7 @@ exports.update = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Error updating NFTcollection with id=" + id
         });
@@ -113,7 +116,7 @@ exports.update = (req, res) => {
   };
 
 // Delete a NFTcollection with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = (req:express.Request, res:express.Response) => {
     // Validate id  
     const id = req.params.id;
     if(!id){
@@ -127,7 +130,7 @@ exports.delete = (req, res) => {
     NFTcollection.destroy({
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "NFTcollection was deleted successfully!"
@@ -138,9 +141,11 @@ exports.delete = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Could not delete NFTcollection with id=" + id
         });
       });
   };
+
+  export {}

@@ -1,11 +1,13 @@
 const Util = require('commonutils');
-const logger = require('../logger');
-const db = require("../models");
+import logger from '../logger';
+import db from "../models";
 const MintedNFT = db.mintedNFT;
-const Op = db.Sequelize.Op;
+import Sequelize from 'sequelize';
+const Op = Sequelize.Op;
+import express from "express";
 
 // Create and Save a new MintedNFT
-exports.create = (req, res) => {
+exports.create = (req:express.Request, res:express.Response) => {
     // Validate request
     if (!Util.verifyValidInputs([req.body.NFTcollectionId, req.body.blockchainTokenId, req.body.tx  ])) {
       res.status(400).send({
@@ -16,11 +18,11 @@ exports.create = (req, res) => {
     
     // Save MintedNFT in the database
     MintedNFT.create(req.body)
-      .then(data => {
+      .then((data: any) => {
         logger.info(data)
         res.send(data);        
       })
-      .catch(err => {
+      .catch((err: Error) => {
         logger.warn(err.message);
         res.status(500).send({
           message:
@@ -30,17 +32,17 @@ exports.create = (req, res) => {
   };
 
 // Retrieve all MintedNFTs or all specific from a collection.
-exports.findAll = (req, res) => {
+exports.findAll = (req:express.Request, res:express.Response) => {
   const NFTcollectionId = req.params.NFTcollectionId;
   const condition = NFTcollectionId ? {
     NFTcollectionId: { [Op.eq]: `${NFTcollectionId}` } 
   } : null;
 
   MintedNFT.findAll({where: condition})
-      .then(data => {
+      .then((data: any) => {
         res.send(data);
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message:
             err.message || "Some error occurred while retrieving users."
@@ -49,10 +51,10 @@ exports.findAll = (req, res) => {
   };
 
 // Find a single MintedNFT with an id
-exports.findOne = (req, res) => {
+exports.findOne = (req:express.Request, res:express.Response) => {
     const id = req.params.id;
     MintedNFT.findByPk(id, {include: [{model: db.NFTcollection}]} )
-      .then(data => {
+      .then((data: any) => {
         if (data) {
           res.send(data);
         } else {
@@ -61,7 +63,7 @@ exports.findOne = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Error retrieving MintedNFT with id=" + id
         });
@@ -69,7 +71,7 @@ exports.findOne = (req, res) => {
   };
 
 // Update a MintedNFT by the id in the request
-exports.update = (req, res) => {
+exports.update = (req:express.Request, res:express.Response) => {
     // Validate id  
     const id = req.params.id;
     if(!id){
@@ -91,7 +93,7 @@ exports.update = (req, res) => {
     MintedNFT.update(req.body, {
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "MintedNFT was updated successfully."
@@ -102,7 +104,7 @@ exports.update = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Error updating MintedNFT with id=" + id
         });
@@ -110,7 +112,7 @@ exports.update = (req, res) => {
   };
 
 // Delete a MintedNFT with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = (req:express.Request, res:express.Response) => {
     // Validate id  
     const id = req.params.id;
     if(!id){
@@ -124,7 +126,7 @@ exports.delete = (req, res) => {
     MintedNFT.destroy({
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "MintedNFT was deleted successfully!"
@@ -135,7 +137,7 @@ exports.delete = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Could not delete MintedNFT with id=" + id
         });

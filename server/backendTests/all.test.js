@@ -1,5 +1,5 @@
 const request = require("supertest");
-const promiseApp = require("../app.js");
+const promiseApp = require("../app.ts");
 const Util = require("commonutils");
 
 let app

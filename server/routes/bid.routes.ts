@@ -1,5 +1,5 @@
-module.exports = (app) => {
-    const bids = require("../controllers/bid.controller.js");
+export default (app: any) => {
+    const bids = require("../controllers/bid.controller");
   
     var router = require("express").Router();
   

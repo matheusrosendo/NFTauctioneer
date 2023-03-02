@@ -1,11 +1,11 @@
 const Util = require('commonutils');
-const logger = require('../logger');
-const db = require("../models");
+import logger from '../logger';
+import db from "../models";
 const AuctionManager = db.auctionManager;
-const Op = db.Sequelize.Op;
+import express from "express";
 
 // Create and Save a new AuctionManager
-exports.create = (req, res) => {
+exports.create = (req:express.Request, res:express.Response) => {
     // Validate request
     if (!Util.verifyValidInputs([req.body.address, req.body.tx, req.body.userId])) {
       res.status(400).send({
@@ -23,11 +23,11 @@ exports.create = (req, res) => {
   
     // Save AuctionManager in the database
     AuctionManager.create(auctionManager)
-      .then(data => {
+      .then((data: any) => {
         logger.info(data)
         res.send(data);        
       })
-      .catch(err => {
+      .catch((err: Error) => {
         logger.warn(err.message);
         res.status(500).send({
           message:
@@ -37,14 +37,14 @@ exports.create = (req, res) => {
   };
 
 // Retrieve all AuctionManagers from the database.
-exports.findAll = (req, res) => {
+exports.findAll = (req:express.Request, res:express.Response) => {
   
   //make query
   AuctionManager.findAll()
-    .then(data => {
+    .then((data: any) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err: Error) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving auctionManagers."
@@ -54,10 +54,10 @@ exports.findAll = (req, res) => {
 
 
 // Find a single AuctionManager with an id
-exports.findOne = (req, res) => {
+exports.findOne = (req:express.Request, res:express.Response) => {
   const id = req.params.id;
   AuctionManager.findByPk(id)
-      .then(data => {
+      .then((data: any) => {
         if (data) {
           res.send(data);
         } else {
@@ -66,7 +66,7 @@ exports.findOne = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Error retrieving AuctionManager with id=" + id
         });
@@ -74,13 +74,13 @@ exports.findOne = (req, res) => {
   };
 
 // Update a AuctionManager by the id in the request
-exports.update = (req, res) => {
+exports.update = (req:express.Request, res:express.Response) => {
     const id = req.params.id;
   
     AuctionManager.update(req.body, {
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "AuctionManager was updated successfully."
@@ -91,7 +91,7 @@ exports.update = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Error updating AuctionManager with id=" + id
         });
@@ -99,13 +99,13 @@ exports.update = (req, res) => {
   };
 
 // Delete a AuctionManager with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = (req:express.Request, res:express.Response) => {
     const id = req.params.id;
   
     AuctionManager.destroy({
       where: { id: id }
     })
-      .then(num => {
+      .then((num: number) => {
         if (num == 1) {
           res.send({
             message: "AuctionManager was deleted successfully!"
@@ -116,7 +116,7 @@ exports.delete = (req, res) => {
           });
         }
       })
-      .catch(err => {
+      .catch((err: Error) => {
         res.status(500).send({
           message: "Could not delete AuctionManager with id=" + id
         });

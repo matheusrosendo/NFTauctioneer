@@ -15,13 +15,14 @@ In order to ease testing and make interactions without implementing a frontend, 
 
 ### Tech Stack
 ```
+* Typescript
 * Solidity 
 * Hardhat
-* Node.Js
+* Node.js
 * Express
 * Mysql / Docker
 * Sequelizer 
-* Ethers.Js 
+* Ethers.js 
 * Jest / Supertest
 * solidity-coverage / chai
 * Ganache 
@@ -30,10 +31,8 @@ In order to ease testing and make interactions without implementing a frontend, 
 
 ### Folder structure 
 ```
-* classes: javascript custom classes for specific purposes
 * contracts: smart contracts
 * images: pictures used in this readme file
-* scripts: initial setup procedures
 * tasks: user actions 
 * test: unit tests 
 * server: all backend components 

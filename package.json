@@ -2,10 +2,11 @@
   "name": "nftauctioneer",
   "version": "0.0.1",
   "description": "an auctioneer for NFTs using Mysql database",
-  "main": "server/server.js",
+  "main": "./dist/server/server.js",
   "scripts": {
-    "start": "node server/server.js",
-    "test": "npx hardhat test --network hardhat"
+    "start": "node dist/server/server.js",
+    "test": "npx hardhat test --network hardhat",
+    "dev": "tsc -w & nodemon dist/server/server.js"
   },
   "repository": {
     "type": "git",
@@ -29,8 +30,12 @@
     "@nomicfoundation/hardhat-toolbox": "^2.0.1",
     "@nomiclabs/hardhat-ganache": "^2.0.1",
     "@types/chai": "^4.3.4",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.14.2",
+    "@types/pino": "^7.0.5",
+    "@types/sequelize": "^4.28.14",
     "chai": "^4.3.7",
     "hardhat": "^2.12.6",
     "ts-node": "^10.9.1",

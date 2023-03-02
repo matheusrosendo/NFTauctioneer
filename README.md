@@ -115,7 +115,7 @@ the result will be in a created folder called `coverage`. Open coverage/index.ht
 Open another terminal window and start the backend. It will setup database deploying all tables from scratch using Sequelizer. It will also start Express server running the API with all endpoints:  
 `npm start`    
 
-Open another terminal window and execute all steps of the Happy Path Use Case (This use case simulates an entire auciton since minting NFT until setling down the auction). Details of each step is contained and comented in the bash script file happyPathUseCase.sh: 
+Open another terminal window and execute all steps of the Happy Path Use Case (This use case simulates an entire auciton since minting NFT until setling down the auction). Details of each step is contained and comented in the bash script file happyPathUseCase.sh:  
 `sh happyPathUseCase.sh`  
 
 It is expected all steps executed with success with the following final results:

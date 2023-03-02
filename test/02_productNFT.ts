@@ -1,7 +1,8 @@
-const { expect } = require("chai");
-const hre = require("hardhat");
-const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
-require("dotenv").config({path: ".env"});
+import { expect } from "chai";
+import { ethers } from "hardhat";
+import * as dotenv from "dotenv";
+dotenv.config();
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 describe("NFTcollection general unit test", function () {
   async function fixtureDeployNFTcollectionfromAccount0() {

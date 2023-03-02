@@ -1,7 +1,9 @@
-const { expect } = require("chai");
-const hre = require("hardhat");
-const { loadFixture } = require("@nomicfoundation/hardhat-network-helpers");
-require("dotenv").config({path: ".env"});
+import { expect } from "chai";
+import { ethers } from "hardhat";
+import * as dotenv from "dotenv";
+dotenv.config();
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+
 
 describe("Auction Use Case -> Happy Path Unit Test \n  Actors: \n    Contract Owner: Account 0 \n    Bidders: Account 1, 2, 3\n    Seller: Account 4", function () {
   

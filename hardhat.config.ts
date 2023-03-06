@@ -1,25 +1,22 @@
-require("@nomicfoundation/hardhat-toolbox");
-require('solidity-coverage');
+import "@nomicfoundation/hardhat-toolbox";
+import 'solidity-coverage';
 
 //import custom taks
-require("./tasks/new_createUser");
-require("./tasks/new_createInitialUsers");
-require("./tasks/new_deployAuctionManager");
-require("./tasks/new_getUser");
-require("./tasks/new_deployNFTcollection");
-require("./tasks/new_mintToken");
-require("./tasks/new_productNFTapprove");
-require("./tasks/new_openAuction");
-require("./tasks/new_bidAuction");
-require("./tasks/new_balances");
-require("./tasks/new_infoMintedNFT");
-require("./tasks/new_settleAuction");
+import "./tasks/new_createUser";
+import "./tasks/new_createInitialUsers";
+import "./tasks/new_deployAuctionManager";
+import "./tasks/new_getUser";
+import "./tasks/new_deployNFTcollection";
+import "./tasks/new_mintToken";
+import "./tasks/new_productNFTapprove";
+import "./tasks/new_openAuction";
+import "./tasks/new_bidAuction";
+import "./tasks/new_balances";
+import "./tasks/new_infoMintedNFT";
+import "./tasks/new_settleAuction";
 
 
-
-
-
-const fs = require("fs");
+import fs from "fs";
 const mnemonicPhrase = fs.readFileSync(".secret").toString().trim();
 //uncoment to use goerli tesnet
 //const infuraProjectId = fs.readFileSync(".infura").toString().trim();

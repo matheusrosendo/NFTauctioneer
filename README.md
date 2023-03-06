@@ -111,6 +111,9 @@ the result will be in a created folder called `coverage`. Open coverage/index.ht
 
 
 ## Happy Path Use Case
+Compile smart contracts 
+`npx hardhat compile`
+
 Open another terminal window and start the backend. It will setup database deploying all tables from scratch using Sequelizer. It will also start Express server running the API with all endpoints:  
 `npm start`    
 

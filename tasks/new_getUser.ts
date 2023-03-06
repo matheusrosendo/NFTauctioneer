@@ -9,7 +9,7 @@ dotenv.config();
 
 require("dotenv").config({path: ".env"});
 
-module.exports = 
+export default 
 task("custom-get-user", "##### Get User data using axios #####")
 .addParam("address", "The user account's address")
 .setAction(async (taskArgs, hre) => {

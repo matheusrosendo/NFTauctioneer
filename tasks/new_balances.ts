@@ -4,7 +4,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import "@nomiclabs/hardhat-ethers"
 import axios from "axios";
 
-module.exports = 
+export default 
 task("custom-balances", "Shows balances")
 .addParam("manager", "Auction Manager Id")
 .setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {

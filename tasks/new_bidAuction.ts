@@ -4,8 +4,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import "@nomiclabs/hardhat-ethers"
 import axios from "axios";
 
-module.exports = 
-
+export default 
 task("custom-auction-bid", "##### Bid Auction on Auction Manager as specified account #####")
 .addParam("account", "The user account's sequence ID")
 .addParam("auction", "Auction ID")

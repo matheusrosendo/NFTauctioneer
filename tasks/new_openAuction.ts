@@ -6,7 +6,7 @@ import axios from "axios";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-module.exports = 
+export default 
 task("custom-auction-open", "##### Open Auction on Auction Manager as specified account #####")
 .addParam("account", "The user account's sequence ID")
 .addParam("manager", "Auction Manager ID")

@@ -5,7 +5,7 @@ import axios from "axios";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-module.exports = 
+export default 
 task("custom-mintNFT", "##### Mint a new NFT in a NFTcollection contract as specified account #####")
 .addParam("account", "The account's sequence ID")
 .addParam("collection", "The NFTcollection ID")

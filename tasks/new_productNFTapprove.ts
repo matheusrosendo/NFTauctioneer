@@ -7,7 +7,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 
-module.exports = 
+export default 
 task("custom-approve", "##### Approve AuctionManager contract to transfer a specific token of the informed NFTcollection #####")
 .addParam("account", "The user account's sequence ID")
 .addParam("manager", "Auction Manager ID")

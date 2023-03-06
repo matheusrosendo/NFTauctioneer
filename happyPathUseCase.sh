@@ -1,10 +1,6 @@
 #!/bin/bash
 STEP=0
 
-printf "\n\n##### STEP %d: compile smart contracts" $STEP
-STEP=$((STEP+1))
-npx hardhat compile
-
 printf "\n\n##### STEP %d: initiate users" $STEP
 STEP=$((STEP+1))
 npx hardhat custom-init-users

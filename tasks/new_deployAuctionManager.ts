@@ -7,7 +7,7 @@ import axios from "axios";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-module.exports = 
+export default 
 task("custom-init-deploy", "##### Deploy AuctionManager and save tx and address in the database #####")
 .setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {
   

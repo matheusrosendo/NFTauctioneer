@@ -7,7 +7,7 @@ import axios from "axios";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-module.exports = 
+export default 
 task("custom-create-user", "##### Create User in database #####")
 .addParam("address", "User account address")
 .addParam("description", "User account description")

@@ -6,7 +6,7 @@ import axios from "axios";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-module.exports = 
+export default 
 task("custom-minted-info", "##### Uri info of an token on NFTcollection #####")
 .addParam("minted", "Minted Token database Id")
 

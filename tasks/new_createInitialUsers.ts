@@ -7,7 +7,7 @@ import axios from "axios";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-module.exports = 
+export default 
 task("custom-init-users", "##### Create one admin address (first one) and populate database with the other address #####")
 .setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {
   

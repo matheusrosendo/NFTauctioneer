@@ -5,7 +5,7 @@ import axios from "axios";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-module.exports = 
+export default 
 task("custom-collection-deploy", "##### Deploys a NFTcollection contract as specified account #####")
 .addParam("account", "The account's sequence ID")
 .setAction(async (taskArgs: any, hre: HardhatRuntimeEnvironment) => {

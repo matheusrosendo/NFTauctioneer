@@ -1,29 +1,30 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import hre from 'hardhat'
+import '@nomiclabs/hardhat-ethers'
 import * as dotenv from "dotenv";
 dotenv.config();
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 describe("NFTcollection general unit test", function () {
   async function fixtureDeployNFTcollectionfromAccount0() {
-    const NFTcollectionfactory = await ethers.getContractFactory("NFTcollection");
-    const accounts = await ethers.getSigners();
+    const NFTcollectionfactory = await hre.ethers.getContractFactory("NFTcollection");
+    const accounts = await hre.ethers.getSigners();
     const NFTcollectioninstance = await NFTcollectionfactory.connect(accounts[0]).deploy();
     await NFTcollectioninstance.deployed();
     return { NFTcollectioninstance, accounts};
   }
 
   async function fixtureDeployNFTcollectionfromAccount1() {
-    const NFTcollectionfactory = await ethers.getContractFactory("NFTcollection");
-    const accounts = await ethers.getSigners();
+    const NFTcollectionfactory = await hre.ethers.getContractFactory("NFTcollection");
+    const accounts = await hre.ethers.getSigners();
     const NFTcollectioninstance = await NFTcollectionfactory.connect(accounts[1]).deploy();
     await NFTcollectioninstance.deployed();
     return { NFTcollectioninstance, accounts};
   }
 
   async function fixtureDeployNFTcollectionfromAccount4() {
-    const NFTcollectionfactory = await ethers.getContractFactory("NFTcollection");
-    const accounts = await ethers.getSigners();
+    const NFTcollectionfactory = await hre.ethers.getContractFactory("NFTcollection");
+    const accounts = await hre.ethers.getSigners();
     const NFTcollectioninstance = await NFTcollectionfactory.connect(accounts[4]).deploy();
     await NFTcollectioninstance.deployed();
     return { NFTcollectioninstance, accounts};
@@ -31,8 +32,8 @@ describe("NFTcollection general unit test", function () {
 
    //deploys AuctionManager contract as account 0
    async function fixtureDeployAuctionManager() {
-    const auctionManagerfactory = await ethers.getContractFactory("AuctionManager");
-    const accounts = await ethers.getSigners();
+    const auctionManagerfactory = await hre.ethers.getContractFactory("AuctionManager");
+    const accounts = await hre.ethers.getSigners();
     
     let auctionDuration = parseInt(process.env.AUCTION_DURATION_IN_DAYS ?? '0');
     let maxBids = parseInt(process.env.MAX_BIDS_PER_AUCTION ?? '0');

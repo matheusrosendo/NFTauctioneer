@@ -1,5 +1,6 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import hre from 'hardhat'
+import '@nomiclabs/hardhat-ethers'
 import * as dotenv from "dotenv";
 dotenv.config();
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
@@ -9,8 +10,8 @@ describe("Auction Use Case -> Happy Path Unit Test \n  Actors: \n    Contract Ow
   
   //deploys AuctionManager contract as account 0
   async function fixtureDeployAuctionManager() {
-    const auctionManagerfactory = await ethers.getContractFactory("AuctionManager");
-    const accounts = await ethers.getSigners();
+    const auctionManagerfactory = await hre.ethers.getContractFactory("AuctionManager");
+    const accounts = await hre.ethers.getSigners();
     
     let auctionDuration = parseInt(process.env.AUCTION_DURATION_IN_DAYS ?? '0');
     let maxBids = parseInt(process.env.MAX_BIDS_PER_AUCTION ?? '0');
@@ -24,7 +25,7 @@ describe("Auction Use Case -> Happy Path Unit Test \n  Actors: \n    Contract Ow
   //deploys NFTcollection contract as account 4 
   async function fixtureDeployNFTcollectionasAccount4() {
     let { auctionManagerInstance, accounts} = await fixtureDeployAuctionManager();
-    const NFTcollectionfactory = await ethers.getContractFactory("NFTcollection");
+    const NFTcollectionfactory = await hre.ethers.getContractFactory("NFTcollection");
     const NFTcollectioninstance = await NFTcollectionfactory.connect(accounts[4]).deploy();
     await NFTcollectioninstance.deployed();
     return { auctionManagerInstance, NFTcollectioninstance, accounts};
@@ -65,22 +66,22 @@ describe("Auction Use Case -> Happy Path Unit Test \n  Actors: \n    Contract Ow
     let {auctionManagerInstance, NFTcollectioninstance, accounts} = await fixtureBidAuctionAsSeveralAccounts();
     
     //get balances before settle
-    let account0preBalance = await ethers.provider.getBalance(accounts[0].address);
-    let account1preBalance = await ethers.provider.getBalance(accounts[1].address);
-    let account2preBalance = await ethers.provider.getBalance(accounts[2].address);
-    let account3preBalance = await ethers.provider.getBalance(accounts[3].address);
-    let account4preBalance = await ethers.provider.getBalance(accounts[4].address);
+    let account0preBalance = await hre.ethers.provider.getBalance(accounts[0].address);
+    let account1preBalance = await hre.ethers.provider.getBalance(accounts[1].address);
+    let account2preBalance = await hre.ethers.provider.getBalance(accounts[2].address);
+    let account3preBalance = await hre.ethers.provider.getBalance(accounts[3].address);
+    let account4preBalance = await hre.ethers.provider.getBalance(accounts[4].address);
     let accountsPreBalances = [account0preBalance, account1preBalance, account2preBalance, account3preBalance, account4preBalance];
     
     //realize settle
     await auctionManagerInstance.connect(accounts[3]).settleAuction(0);
 
     //get balances after settle
-    let account0posBalance = await ethers.provider.getBalance(accounts[0].address);
-    let account1posBalance = await ethers.provider.getBalance(accounts[1].address);
-    let account2posBalance = await ethers.provider.getBalance(accounts[2].address);
-    let account3posBalance = await ethers.provider.getBalance(accounts[3].address);
-    let account4posBalance = await ethers.provider.getBalance(accounts[4].address);
+    let account0posBalance = await hre.ethers.provider.getBalance(accounts[0].address);
+    let account1posBalance = await hre.ethers.provider.getBalance(accounts[1].address);
+    let account2posBalance = await hre.ethers.provider.getBalance(accounts[2].address);
+    let account3posBalance = await hre.ethers.provider.getBalance(accounts[3].address);
+    let account4posBalance = await hre.ethers.provider.getBalance(accounts[4].address);
     let accountsPosBalances = [account0posBalance, account1posBalance, account2posBalance, account3posBalance, account4posBalance];
     
 
@@ -143,19 +144,19 @@ describe("Auction Use Case -> Happy Path Unit Test \n  Actors: \n    Contract Ow
     expect(await NFTcollectioninstance.ownerOf(0)).to.equal(winnerBidAddress);
 
     //verify if owner of the contract (account 0) received its commission
-    let ownerAmountReceived = ethers.BigNumber.from(accountsPosBalances[0]).sub(accountsPreBalances[0]);
+    let ownerAmountReceived = hre.ethers.BigNumber.from(accountsPosBalances[0]).sub(accountsPreBalances[0]);
     expect(auctionInfo[auctionInfo.length-2]).to.equal(ownerAmountReceived);
 
     //verify if seller received the winner bid offer (bidder offer - comission)
-    let sellerAmountReceived = ethers.BigNumber.from(accountsPosBalances[4]).sub(accountsPreBalances[4]);
-    let bidWinnerOfferMinusCommission = ethers.BigNumber.from(winnerBidOffer).sub(ownerAmountReceived);
+    let sellerAmountReceived = hre.ethers.BigNumber.from(accountsPosBalances[4]).sub(accountsPreBalances[4]);
+    let bidWinnerOfferMinusCommission = hre.ethers.BigNumber.from(winnerBidOffer).sub(ownerAmountReceived);
     expect(sellerAmountReceived).to.equal(bidWinnerOfferMinusCommission);
     
     //verify if amounts were properly returned to loser bidders (accounts 1 and 2)
-    let account1AmountReceived = ethers.BigNumber.from(accountsPosBalances[1]).sub(accountsPreBalances[1]);
+    let account1AmountReceived = hre.ethers.BigNumber.from(accountsPosBalances[1]).sub(accountsPreBalances[1]);
     const [account1BidAddress, account1BidOffer] = await auctionManagerInstance.getBidOfAuction(0, 0);
     expect(account1AmountReceived).to.equal(account1BidOffer);
-    let account2AmountReceived = ethers.BigNumber.from(accountsPosBalances[2]).sub(accountsPreBalances[2]);
+    let account2AmountReceived = hre.ethers.BigNumber.from(accountsPosBalances[2]).sub(accountsPreBalances[2]);
     const [account2BidAddress, account2BidOffer] = await auctionManagerInstance.getBidOfAuction(0, 1);
     expect(account2AmountReceived).to.equal(account2BidOffer);
 

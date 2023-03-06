@@ -1,13 +1,14 @@
 import { expect } from "chai";
 import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { ethers } from "hardhat";
+import hre from 'hardhat'
+import '@nomiclabs/hardhat-ethers'
 import * as dotenv from "dotenv";
 dotenv.config();
 
 describe("AuctionManager general unit test", function () {
  
   it("be able to deploy a new AuctionManager contract", async function () {
-    const auctionManager = await ethers.getContractFactory("AuctionManager");
+    const auctionManager = await hre.ethers.getContractFactory("AuctionManager");
 
     let auctionDuration = parseInt(process.env.AUCTION_DURATION_IN_DAYS!);
     let maxBids = parseInt(process.env.MAX_BIDS_PER_AUCTION!);

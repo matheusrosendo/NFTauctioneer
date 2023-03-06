@@ -8,8 +8,9 @@
         "strict": true,
         "skipLibCheck": true,
         "outDir": "./dist",
-        "rootDir": "./server", 
+        "rootDir": "./", 
     }, 
-    "exclude": ["./tasks", "./test", "./dist/**/*", "__tests__"]
+    "exclude": ["./tasks", "hardhat-test", "./dist/**/*", "jest-tests", "./old/*", "./coverage", "*config.js"], 
+    "files": ["./hardhat.config.ts"]
 }
   

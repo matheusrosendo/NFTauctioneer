@@ -7,67 +7,71 @@ beforeAll(async () => {
     app = await Promise.resolve(promiseApp);
     await Util.sleep(500);
 });
-
 describe("User Endpoints", () =>{
+
+    describe("User Inserts", () =>{
+        
+        test("should be able to insert a User record on database", async() =>{    
+            const response = await request(app).post("/api/auction/user/").send({
+                id: "0",
+                address: "0xabcd123456...",
+                description: "user abdc",
+                admin: 0
+            })
+            expect(response.body.id).toBe("0")
+            return expect(response.statusCode).toBe(200)
+        })
+
+        test("should be able to insert a second User record on database", async() =>{    
+            const response = await request(app).post("/api/auction/user/").send({
+                id: "1",
+                address: "0xabcd2222222...",
+                description: "user abdc 2222",
+                admin: 1
+            })
+            expect(response.body.id).toBe("1")
+            return expect(response.statusCode).toBe(200)
+        })
+
+        test("should be able to insert a third User record on database", async() =>{    
+            const response = await request(app).post("/api/auction/user/").send({
+                id: "2",
+                address: "0xabcd2222222...",
+                description: "user abdc 333",
+                admin: 0
+            })
+            expect(response.body.id).toBe("2")
+            return expect(response.statusCode).toBe(200)
+        })
+    })
     
-    test("should be able to insert a User record on database", async() =>{    
-        const response = await request(app).post("/api/auction/user/").send({
-            id: "0",
-            address: "0xabcd123456...",
-            description: "user abdc",
-            admin: 0
+    describe("User Inserts", () =>{
+        test("should be able to update a User record on database", async() =>{    
+            const response = await request(app).put("/api/auction/user/1").send({
+                id: "1",
+                address: "0xabcd2222222...",
+                description: "user id 1 altered",
+                admin: 0
+            })
+            return expect(response.statusCode).toBe(200)
         })
-        expect(response.body.id).toBe("0")
-        return expect(response.statusCode).toBe(200)
-    })
 
-    test("should be able to insert a second User record on database", async() =>{    
-        const response = await request(app).post("/api/auction/user/").send({
-            id: "1",
-            address: "0xabcd2222222...",
-            description: "user abdc 2222",
-            admin: 1
+        test("should retrieve three User records from database", async() =>{    
+            const response = await request(app).get("/api/auction/user/").send()
+            return expect(response.body.length).toBe(3)
         })
-        expect(response.body.id).toBe("1")
-        return expect(response.statusCode).toBe(200)
-    })
 
-    test("should be able to insert a third User record on database", async() =>{    
-        const response = await request(app).post("/api/auction/user/").send({
-            id: "2",
-            address: "0xabcd2222222...",
-            description: "user abdc 333",
-            admin: 0
+        test("should be able to delete the second User record from database", async() =>{    
+            const response = await request(app).delete("/api/auction/user/2").send()
+            return expect(response.statusCode).toBe(200)
         })
-        expect(response.body.id).toBe("2")
-        return expect(response.statusCode).toBe(200)
+
+        test("should retrieve two User record from database", async() =>{    
+            const response = await request(app).get("/api/auction/user/").send()
+            return expect(response.body.length).toBe(2)
+        }) 
+
     })
-
-    test("should be able to update a User record on database", async() =>{    
-        const response = await request(app).put("/api/auction/user/1").send({
-            id: "1",
-            address: "0xabcd2222222...",
-            description: "user id 1 altered",
-            admin: 0
-        })
-        return expect(response.statusCode).toBe(200)
-    })
-
-    test("should retrieve three User records from database", async() =>{    
-        const response = await request(app).get("/api/auction/user/").send()
-        return expect(response.body.length).toBe(3)
-    })
-
-    test("should be able to delete the second User record from database", async() =>{    
-        const response = await request(app).delete("/api/auction/user/2").send()
-        return expect(response.statusCode).toBe(200)
-    })
-
-    test("should retrieve two User record from database", async() =>{    
-        const response = await request(app).get("/api/auction/user/").send()
-        return expect(response.body.length).toBe(2)
-    }) 
-
 })
  
 describe("AuctionManager Endpoints", () =>{
@@ -311,11 +315,3 @@ describe("Bid Endpoints", () =>{
     })
 })
  
-
-
-afterAll(async () => {
-    // Defer jest result output waiting for stdout to flush
-    await Util.sleep(500);
-});
-
-  

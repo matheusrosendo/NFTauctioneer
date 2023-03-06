@@ -8,8 +8,8 @@
         "strict": true,
         "skipLibCheck": true,
         "outDir": "./dist",
-        "rootDir": "./", 
+        "rootDir": "./server", 
     }, 
-    "exclude": ["./tasks", "./test", "./dist/**/*"]
+    "exclude": ["./tasks", "./test", "./dist/**/*", "__tests__"]
 }
   

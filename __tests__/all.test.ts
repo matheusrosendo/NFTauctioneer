@@ -1,8 +1,8 @@
-const request = require("supertest");
-const promiseApp = require("../app.ts");
+import request from "supertest";
+import promiseApp from "../server/app";
 const Util = require("commonutils");
 
-let app
+let app: any;
 beforeAll(async () => {
     app = await Promise.resolve(promiseApp);
     await Util.sleep(500);

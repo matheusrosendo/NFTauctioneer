@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/matheusrosendo/NFTauctioneer#readme",
   "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^2.0.1",
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
     "@nomiclabs/hardhat-ethers": "^2.2.2",
     "@nomiclabs/hardhat-ganache": "^2.0.1",
     "@types/chai": "^4.3.4",
@@ -61,12 +61,12 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "ganache-cli": "^6.12.2",
-    "hardhat-gas-reporter": "^1.0.9",
+    "hardhat-gas-reporter": "^1.0.2",
     "jsonfilemanager": "^0.0.2",
     "mysql2": "^3.0.1",
     "pino": "^8.8.0",
     "sequelize": "^6.28.0",
-    "solidity-coverage": "^0.8.2",
+    "solidity-coverage": "^0.7.22",
     "source-map-loader": "^4.0.1",
     "supertest": "^6.3.3"
   }

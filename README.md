@@ -90,7 +90,7 @@ If it is not running, start the container
 `docker start auctionNFT`
 
 ## Unit Tests
-It was developed two types of unit tests: the ones focused on testing the AuctionManager Smart Contract using Hardhat and Chai, located in the `test` folder; and the ones focused on testing the API endpoits using Jest and Supertest, located in the `server/backendTests` folder.
+It was developed two types of unit tests: the ones focused on testing the AuctionManager Smart Contract using Hardhat and Chai, located in the `test` folder; and the ones focused on testing the API endpoits using Jest and Supertest, located in the `jest-tests` folder.
 
 ### Jest Unit Tests / Coverage (API tests)
 To execute Jest Unit tests:  

@@ -10,7 +10,7 @@
         "outDir": "./dist",
         "rootDir": "./", 
     }, 
-    "exclude": ["./tasks", "hardhat-test", "./dist/**/*", "jest-tests", "./old/*", "./coverage", "*config.js"], 
+    "exclude": ["./tasks", "test", "./dist/**/*", "jest-tests", "./old/*", "./coverage", "*config.js"], 
     "files": ["./hardhat.config.ts"]
 }
   
